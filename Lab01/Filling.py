@@ -81,49 +81,7 @@ class Render(object):
     def vertex(self, x, y):
         self.point(x, y)   
     
-    # se debija la linea
-    def line(self, x0, y0, x1, y1):
-        dy = abs(y1 - y0)
-        dx = abs(x1 - x0)
-
-        steep = dy > dx
-
-        if steep:
-            x0, y0 = y0, x0
-            x1, y1 = y1, x1
-
-        if x0 > x1:
-            x0, x1 = x1, x0
-            y0, y1 = y1, y0
-
-        dy = abs(y1 - y0)
-        dx = abs(x1 - x0)
-
-        offset = 0
-        threshold = dx
-        y = y0
-        inc = 1 if y1 > y0 else -1
-
-        for x in range(x0, x1):
-            if steep:
-                self.point(y, x)
-                if self.puntos.get(x) == None:
-                    self.puntos[x] = []
-
-                self.puntos[x] += [y]
-            else:
-                self.point(x, y)
-                if self.puntos.get(y) == None:
-                    self.puntos[y] = []
-
-                self.puntos[y] += [x]
-
-            offset += 2 * dy
-            if offset >= threshold:
-                y += inc
-                threshold += 2 * dx
-
-    
+  
     # Esta parte de codigo eesta basada en esta pagina
     # https://handwiki.org/wiki/Even%E2%80%93odd_rule 
     def glFit(self, x, y, points):
